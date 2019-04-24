@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Welcome</title>
+</head>
+<body>
+<div xmlns:th="http://www.thymeleaf.org">
+    <form th:object="${student}" method = "POST">
+
+        <h4>Login</h4>
+        <label>Username</label>
+        <input type="text" name="username"/>
+        <br/><br/>
+
+        <label>Password</label>
+        <input type="text" name="password"/>
+        <br/><br/>
+       
+        <input type="submit" name = "action" value="Login"/>
+
+        <hr>
+        <h4>Student Information</h4>
+
+        <label>Student ID</label>
+        <input type="text" th:field="*{studentId}"/>
+        <br/><br/>
+
+        <label>User ID</label>
+        <input type="text" th:field="*{userId}"/>
+        <br/><br/>
+
+        <label>Name</label>
+        <input type="text" th:field="*{studName}"/>
+        <br/><br/>
+
+        <label>Identification Number</label>
+        <input type="text" th:field="*{matricol}"/>
+        <br/><br/>
+
+        <label>Group</label>
+        <input type="text" th:field="*{studGroup}"/>
+        <br/><br/>
+
+        <input type="submit" name = "action" value="Create"/>
+        <input type="submit" name = "action" value="Update"/>
+        <input type="submit" name = "action" value="Delete"/>
+    </form>
+</div>
+</body>
+</html>

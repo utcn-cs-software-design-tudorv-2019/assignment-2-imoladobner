@@ -1,0 +1,99 @@
+
+CREATE TABLE public.useraccount
+(
+    userid integer NOT NULL DEFAULT nextval('useraccount_userid_seq'::regclass) ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
+    username character varying(15) COLLATE pg_catalog."default" NOT NULL,
+    passworduser character varying(10) COLLATE pg_catalog."default" NOT NULL,
+    usertype integer NOT NULL,
+    CONSTRAINT useraccount_pkey PRIMARY KEY (userid)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.useraccount
+    OWNER to postgres;
+
+CREATE TABLE public.student
+(
+    studentid integer NOT NULL DEFAULT nextval('student_studentid_seq'::regclass) ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
+    userid integer,
+    studname character varying(30) COLLATE pg_catalog."default",
+    matricol integer,
+    studgroup integer,
+    CONSTRAINT student_pkey PRIMARY KEY (studentid),
+    CONSTRAINT userid FOREIGN KEY (userid)
+        REFERENCES public.useraccount (userid) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.student
+    OWNER to postgres;
+
+
+CREATE TABLE public.person
+(
+    personid integer NOT NULL DEFAULT nextval('person_personid_seq'::regclass) ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
+    studentid integer,
+    cnp integer,
+    serie character varying(10) COLLATE pg_catalog."default",
+    address character varying(20) COLLATE pg_catalog."default",
+    CONSTRAINT person_pkey PRIMARY KEY (personid),
+    CONSTRAINT studentid FOREIGN KEY (studentid)
+        REFERENCES public.student (studentid) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.person
+    OWNER to postgres;
+
+CREATE TABLE public.course
+(
+    courseid integer NOT NULL DEFAULT nextval('course_courseid_seq'::regclass) ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
+    coursename character varying(20) COLLATE pg_catalog."default",
+    exam date,
+    enrollkey character varying(10) COLLATE pg_catalog."default",
+    CONSTRAINT course_pkey PRIMARY KEY (courseid)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.course
+    OWNER to postgres;
+
+CREATE TABLE public.enrollment
+(
+    enrollmentid integer NOT NULL DEFAULT nextval('enrollment_enrollmentid_seq'::regclass) ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
+    studentid integer,
+    courseid integer,
+    grade double precision,
+    CONSTRAINT enrollment_pkey PRIMARY KEY (enrollmentid),
+    CONSTRAINT courseid FOREIGN KEY (courseid)
+        REFERENCES public.course (courseid) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT studentid FOREIGN KEY (studentid)
+        REFERENCES public.student (studentid) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.enrollment
+    OWNER to postgres;

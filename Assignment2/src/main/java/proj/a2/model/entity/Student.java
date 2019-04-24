@@ -1,5 +1,6 @@
 package proj.a2.model.entity;
 
+import javax.annotation.Generated;
 import javax.persistence.*;
 
 @Entity
@@ -7,19 +8,20 @@ import javax.persistence.*;
 public class Student {
 
 	@Id
-    @Column(name = "studentId", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "studentid", nullable = false)
     private int studentId;
 
-    @Column(name = "userId")
+    @Column(name = "userid")
     private int userId;
     
-    @Column(name = "studName")
+    @Column(name = "studname")
     private String studName;
   
     @Column(name = "matricol")
     private int matricol;
 
-	@Column(name = "studGroup")
+	@Column(name = "studgroup")
     private int studGroup;
 	
 	 public Student() {
@@ -27,13 +29,26 @@ public class Student {
 			// TODO Auto-generated constructor stub
 		}
 
-	public Student(int studentId, int userId, String studName, int matricol, int studGroup) {
+	public Student( int userId, String studName, int matricol, int studGroup) {
 		super();
+		this.userId = userId;
+		this.studName = studName;
+		this.matricol = matricol;
+		this.studGroup = studGroup;
+	}
+	
+	public Student(int studentId, int userId, String studName, int matricol, int studGroup) {
 		this.studentId = studentId;
 		this.userId = userId;
 		this.studName = studName;
 		this.matricol = matricol;
 		this.studGroup = studGroup;
+	}
+
+	@Override
+	public String toString() {
+		return "Student [studentId=" + studentId + ", userId=" + userId + ", studName=" + studName + ", matricol="
+				+ matricol + ", studGroup=" + studGroup + "]";
 	}
 
 	public int getStudentId() {
@@ -75,5 +90,14 @@ public class Student {
 	public void setStudGroup(int studGroup) {
 		this.studGroup = studGroup;
 	}
-	 //override tostring?
+
+	public Student clone(){
+	 	Student student  = new Student();
+	 	student.setStudentId(this.studentId);
+	 	student.setUserId(this.userId);
+	 	student.setStudName(this.studName);
+	 	student.setMatricol(this.matricol);
+	 	student.setStudGroup(this.studGroup);
+	 	return student;
+	}
 }

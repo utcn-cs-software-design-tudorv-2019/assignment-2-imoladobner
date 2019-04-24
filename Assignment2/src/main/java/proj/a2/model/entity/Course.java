@@ -8,6 +8,7 @@ import javax.persistence.*;
 @Table(name="course")
 public class Course {
 
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Id
 	@Column(name="courseId", nullable=false)
 	private int courseId;
